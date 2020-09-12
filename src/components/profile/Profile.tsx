@@ -1,6 +1,7 @@
 import React from 'react';
 import './profile.css';
 import Button from '@material-ui/core/Button';
+import {useHistory} from 'react-router-dom';
 
 interface Props {
     name:string;
@@ -11,6 +12,8 @@ interface Props {
 }
 
 const Profile:React.FC <Props> = ({name,parcelsDelivered,reviews,contact,onGoingDelivery}) => {
+    const history = useHistory();
+
     return (
         <div className='profile__container'>
             <header>
@@ -25,9 +28,9 @@ const Profile:React.FC <Props> = ({name,parcelsDelivered,reviews,contact,onGoing
                 }
             </header>
             <div className="info" >
-                <Button color='secondary' variant='contained' >Edit Profile</Button>
+                <Button onClick={()=>{history.push('/edit-profile')}} color='secondary' variant='contained' >Edit Profile</Button>
                 <p>Contact No.: <span>{contact}</span></p>
-                {onGoingDelivery && <p>Ongoing Delivery: <span> {onGoingDelivery}</span></p>}
+                {onGoingDelivery && <p>Ongoing Delivery: <span> {onGoingDelivery.length}</span></p>}
             </div>
         </div>
     );

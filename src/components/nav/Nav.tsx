@@ -3,9 +3,11 @@ import './nav.css';
 import { AuthContext } from '../../contexts/AuthContextProvider';
 import { NavLink,Redirect } from 'react-router-dom';
 import { firestore } from '../../firebaseConfig';
+import { LoadingContext } from '../../contexts/LoadingContextProvider';
 
 const Nav:React.FC = () => {
     const {userType,setUserType} = useContext(AuthContext);
+    const {isLoading,setIsLoading} = useContext(LoadingContext);
     const [renderRedirect,setRenderRedirect] = useState<string>(userType.userType);
   
     useEffect(()=>{
@@ -14,7 +16,9 @@ const Nav:React.FC = () => {
 
     const UserTypeChanged = async (e:React.ChangeEvent<HTMLSelectElement>) =>{
         let valueSelected = e.target.value;
+        setIsLoading(true);
         const res = await firestore.collection('userTypes').doc(valueSelected).get();
+        setIsLoading(false);
         let user = res.data()
         user!.id = res.id 
         setUserType(user!)
@@ -42,7 +46,7 @@ const Nav:React.FC = () => {
                     </li>
                 }
             </ul>
-            <select onChange={UserTypeChanged} value={userType.userType}>
+            <select disabled={isLoading} className={`${isLoading && 'disabled'}`} onChange={UserTypeChanged} value={userType.userType}>
                 <option value="driver">Driver</option>
                 <option value="employer">Employer</option>
             </select>

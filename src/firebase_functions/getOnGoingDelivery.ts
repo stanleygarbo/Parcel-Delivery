@@ -1,9 +1,9 @@
-import { firestore } from '../firebaseConfig';
+import {firestore} from '../firebaseConfig';
 
 type dataFetched = firebase.firestore.DocumentData[];
 
-export const getPostedJobs = async () =>{
-    const res = await firestore.collection('jobs').orderBy("date", "desc").get();
+export const getOnGoingDelivery = async () =>{
+    const res = await firestore.collection('userTypes').doc('driver').collection('onGoingDelivery').get();
     let data:dataFetched = res.docs.map((doc)=>{
         //make a new obj to store the doc data
         let docDataWithId = doc.data();

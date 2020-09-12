@@ -1,40 +1,47 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import './driverScreen.css';
 import Jobs from '../components/jobs/Jobs';
 import Profile from '../components/profile/Profile';
 import WorkCard from '../components/cards/WorkCard';
 import AccountBalanceCard from '../components/cards/AccountBalanceCard';
 import { AuthContext } from '../contexts/AuthContextProvider';
+import { useQuery } from 'react-query';
+import { getOnGoingDelivery } from '../firebase_functions/getOnGoingDelivery';
+import { LoadingContext } from '../contexts/LoadingContextProvider';
 
 const dummyData = [
     {
         id:'1',
-        title:'sad sh shakd sakljdlsaj jdlska jlksaj ldk',
+        title:'Sample Data 1',
         pickupAddress:'Somewhere, nowhere',
         deliveryAddress:'nowhere somewhere',
         contact:'0219389213',
+        price:15,
         fragile:true
     },
     {
         id:'2',
-        title:'sad sh shakd sakljdlsaj jdlska jlksaj ldk',
+        title:'2nd Sample Data',
         pickupAddress:'Somewhere, nowhere',
         deliveryAddress:'nowhere somewhere',
         contact:'0219389213',
-        fragile:true
-    },
-    {
-        id:'3',
-        title:'sad sh shakd sakljdlsaj jdlska jlksaj ldk',
-        pickupAddress:'Somewhere, nowhere',
-        deliveryAddress:'nowhere somewhere',
-        contact:'0219389213',
+        price:15,
         fragile:true
     },
 ];
 
 export default function(){
     const {userType} = useContext(AuthContext);
+    const {setIsLoading} = useContext(LoadingContext);
+    const {status,data} = useQuery('on going jobs',getOnGoingDelivery);
+
+    useEffect(()=>{
+        if(status === 'loading'){
+            setIsLoading(true);
+        }else{
+            setIsLoading(false);
+        }
+    },[status,setIsLoading])
     
     return(
         <div className='driver__screen'>
@@ -44,12 +51,12 @@ export default function(){
                     name={userType.name} 
                     onGoingDelivery={userType.onGoingDelivery} 
                     parcelsDelivered={userType.parcelsDelivered} 
-                    reviews={userType.reviewa} />
+                    reviews={userType.reviews} />
                 <AccountBalanceCard/>
             </div>
             <div className="column second">
                 <WorkCard />
-                <Jobs jobs={dummyData} title='Ongoing Jobs' />
+                <Jobs jobs={data!} title='Ongoing Jobs' />
                 <Jobs jobs={dummyData} title='Finished Jobs' />
             </div>
         </div>

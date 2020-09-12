@@ -5,6 +5,9 @@ import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import './jobs.css';
 import { AuthContext } from '../../contexts/AuthContextProvider';
+import { acceptJob } from '../../firebase_functions/acceptJob';
+import { deleteJob } from '../../firebase_functions/deleteJob';
+import { LoadingContext } from '../../contexts/LoadingContextProvider';
 
 const useStyles=makeStyles({
     icon:{
@@ -24,6 +27,7 @@ interface Props {
 
 const Jobs:React.FC<Props> = ({jobs,title}) => {
     const {userType} = useContext(AuthContext);
+    const {setIsLoading} = useContext(LoadingContext);
     const [posts,setPosts] = useState<Props['jobs']>();
     const classes=useStyles();
 
@@ -50,7 +54,14 @@ const Jobs:React.FC<Props> = ({jobs,title}) => {
             {posts?.map((job,index)=>
                 <div className='job' key={job.id}>
                     {userType.userType ==='employer' && 
-                        (<IconButton onClick = {()=>deletePost(index)} className={classes.deleteButton}>
+                        (<IconButton 
+                            onClick = {async()=>{
+                                setIsLoading(true);
+                                await deleteJob(job.id);
+                                setIsLoading(false);
+                                deletePost(index);
+                            }} 
+                            className={classes.deleteButton}>
                             <DeleteIcon/>
                         </IconButton>)
                     }
@@ -60,8 +71,19 @@ const Jobs:React.FC<Props> = ({jobs,title}) => {
                     <p>Contact: <span>{job.contact}</span></p>
                     {job.fragile && <p><span>Fragile</span></p>}
                     {job.price && <p><span>${job.price}</span></p>}
-                    {userType.userType ==='driver' && 
-                        (<Button onClick = {()=>deletePost(index)} variant='contained' color='primary' >ACCEPT JOB</Button>)
+                    {userType.userType ==='driver' && job.acceptedBy === 'none' &&
+                        (<Button 
+                            onClick = {async()=>{
+                                setIsLoading(true);
+                                await acceptJob(job.id);
+                                setIsLoading(false);
+                                deletePost(index);
+                            }} 
+                            variant='contained' 
+                            color='primary' 
+                        >
+                            ACCEPT JOB
+                        </Button>)
                     }
                 </div>
             )}

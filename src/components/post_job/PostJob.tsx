@@ -28,40 +28,53 @@ const useStyles = makeStyles((theme) => ({
     }   
 }));
 
+interface inputs{
+    title:string;
+    pickupAddress:string;
+    deliveryAddress:string;
+    contact:string;
+    price:number;
+    acceptedBy?:string;
+    date?:Date;
+}
+
 const PostJob:React.FC = () => {
     const [isLoading,setIsLoading] = useState<boolean>(false);
-
-    const [input,setInput] = useState({
+    // i had to seperate isFragile because it was the only way i could fix a weird bug
+    const [isFragile,setIsFragile] = useState<boolean>(false);
+    const [input,setInput] = useState<inputs>({
         title:'',
         pickupAddress:'',
         deliveryAddress:'',
         contact:'',
         price:0,
-        isFragile:false,
-        acceptedBy:'none'
     });
     const classes = useStyles();
 
     const handleChange = (e:React.ChangeEvent<HTMLInputElement> ) =>{
         setInput({
             ...input,
-            [e.target.name]: e.target.value || e.target.checked,
+            [e.target.name]: e.target.value 
         });
+
     };
 
     const formSubmitted = async (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        //make an obj to store all the inputted data 
+        const data = input;
+        data.date = new Date();
+        data.acceptedBy = 'none';
         setIsLoading(true);
-        await postJob(input);
+        await postJob(data);
         setIsLoading(false);
+        //clear the form
         setInput({
             title:'',
             pickupAddress:'',
             deliveryAddress:'',
             contact:'',
             price:0,
-            isFragile:false,
-            acceptedBy:'none'
         });
     };
 
@@ -91,8 +104,8 @@ const PostJob:React.FC = () => {
             <FormControlLabel
                 control={
                     <Checkbox 
-                        checked={input.isFragile} 
-                        onChange={handleChange} 
+                        checked={isFragile} 
+                        onChange={(e:React.ChangeEvent<HTMLInputElement>)=>setIsFragile(e.target.checked)} 
                         name="isFragile" 
                         color='primary'
                     />
