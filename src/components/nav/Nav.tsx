@@ -2,18 +2,22 @@ import React, { useContext,useState, useEffect } from 'react';
 import './nav.css';
 import { AuthContext } from '../../contexts/AuthContextProvider';
 import { NavLink,Redirect } from 'react-router-dom';
+import { firestore } from '../../firebaseConfig';
 
 const Nav:React.FC = () => {
     const {userType,setUserType} = useContext(AuthContext);
-    const [renderRedirect,setRenderRedirect] = useState<string>(userType);
+    const [renderRedirect,setRenderRedirect] = useState<string>(userType.userType);
   
     useEffect(()=>{
-      console.log(userType)
-      setRenderRedirect(userType)
+      setRenderRedirect(userType.userType)
     },[userType]);
 
-    const UserTypeChanged = (e:React.ChangeEvent<HTMLSelectElement>):void =>{
-        setUserType(e.target.value)
+    const UserTypeChanged = async (e:React.ChangeEvent<HTMLSelectElement>) =>{
+        let valueSelected = e.target.value;
+        const res = await firestore.collection('userTypes').doc(valueSelected).get();
+        let user = res.data()
+        user!.id = res.id 
+        setUserType(user!)
     };
 
     const activeLinkStyle = {
@@ -28,7 +32,7 @@ const Nav:React.FC = () => {
                 <li>
                     <NavLink to='/dashboard' activeStyle={activeLinkStyle}>Dashboard</NavLink>
                 </li>
-                {userType === 'driver' ?
+                {userType.userType === 'driver' ?
                     <li>
                         <NavLink to='/available-jobs' activeStyle={activeLinkStyle}>Available Jobs</NavLink>
                     </li>
@@ -38,7 +42,7 @@ const Nav:React.FC = () => {
                     </li>
                 }
             </ul>
-            <select onChange={UserTypeChanged} value={userType}>
+            <select onChange={UserTypeChanged} value={userType.userType}>
                 <option value="driver">Driver</option>
                 <option value="employer">Employer</option>
             </select>

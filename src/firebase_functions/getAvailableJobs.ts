@@ -14,6 +14,5 @@ export const getAvailableJobs = async () =>{
         //return the object with the document id
         return docDataWithId;
     });
-    console.log(data);
     return data;
 };

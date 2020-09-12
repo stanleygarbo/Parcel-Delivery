@@ -1,3 +1,4 @@
+import { firestore } from '../firebaseConfig';
 import React,{useState, ReactNode} from 'react';
 
 interface Props{
@@ -5,17 +6,17 @@ interface Props{
 }
 
 type Context = {
-    userType:string;
-    setUserType: (active: string) => void;
+    userType:firebase.firestore.DocumentData;
+    setUserType: (active:firebase.firestore.DocumentData) => void;
 } 
 
 export const AuthContext = React.createContext<Context>({ 
-    userType:'',
+    userType:{},
     setUserType: () =>{}
 });
 
 const AuthContextProvider:React.FC<Props> = ({children}) =>{
-    const [userType,setUserType] = useState('employer');
+    const [userType,setUserType] = useState({});
 
     return (
         <AuthContext.Provider value={{userType,setUserType}}>

@@ -2,6 +2,7 @@ import React,{useState, useEffect, useContext} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 import './jobs.css';
 import { AuthContext } from '../../contexts/AuthContextProvider';
 
@@ -48,7 +49,7 @@ const Jobs:React.FC<Props> = ({jobs,title}) => {
             <h2>{posts?.length===0 && 'No '}{title}</h2>
             {posts?.map((job,index)=>
                 <div className='job' key={job.id}>
-                    {userType ==='driver' && 
+                    {userType.userType ==='employer' && 
                         (<IconButton onClick = {()=>deletePost(index)} className={classes.deleteButton}>
                             <DeleteIcon/>
                         </IconButton>)
@@ -57,7 +58,11 @@ const Jobs:React.FC<Props> = ({jobs,title}) => {
                     <p>Pickup: <span>{job.pickupAddress}</span></p>
                     <p>To be delivered at: <span>{job.deliveryAddress}</span></p>
                     <p>Contact: <span>{job.contact}</span></p>
-                    <p>{job.fragile}</p>
+                    {job.fragile && <p><span>Fragile</span></p>}
+                    {job.price && <p><span>${job.price}</span></p>}
+                    {userType.userType ==='driver' && 
+                        (<Button onClick = {()=>deletePost(index)} variant='contained' color='primary' >ACCEPT JOB</Button>)
+                    }
                 </div>
             )}
         </div>

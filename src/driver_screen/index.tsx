@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './driverScreen.css';
 import Jobs from '../components/jobs/Jobs';
 import Profile from '../components/profile/Profile';
 import WorkCard from '../components/cards/WorkCard';
 import AccountBalanceCard from '../components/cards/AccountBalanceCard';
+import { AuthContext } from '../contexts/AuthContextProvider';
 
 const dummyData = [
     {
@@ -33,11 +34,17 @@ const dummyData = [
 ];
 
 export default function(){
+    const {userType} = useContext(AuthContext);
     
     return(
         <div className='driver__screen'>
             <div className="column">
-                <Profile contact='09162321332' name='Stanley Garbo' onGoingDelivery='3' parcelsDelivered={3} reviews={4.3} />
+                <Profile 
+                    contact={userType.contact} 
+                    name={userType.name} 
+                    onGoingDelivery={userType.onGoingDelivery} 
+                    parcelsDelivered={userType.parcelsDelivered} 
+                    reviews={userType.reviewa} />
                 <AccountBalanceCard/>
             </div>
             <div className="column second">
