@@ -1,26 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React,{useContext} from 'react';
+import Nav from './components/nav/Nav';
+import {Switch, Route, Redirect} from 'react-router-dom';
+import DriverScreen from './driver_screen';
+import { AuthContext } from './contexts/AuthContextProvider';
+import EmployerScreen from './employer_screen';
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import AvailableJobs from './driver_screen/AvailableJobs';
+import PostJob from './components/post_job/PostJob';
+import Deposit from './components/payment/Deposit';
 
-function App() {
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: 'rgb(35, 207, 72)',
+      contrastText: '#fff',
+    },
+    secondary: {
+      main: '#222',
+      contrastText: '#fff',
+    },
+  },
+});
+
+const App:React.FC = () => {
+  const {userType} = useContext(AuthContext);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        <Nav />
+        <Switch>
+          <Route path='/dashboard' render={()=> userType === 'driver' ?<DriverScreen/>:<EmployerScreen />}/>
+          {userType === 'driver' ? 
+            <Route path='/available-jobs' component={AvailableJobs} />
+            :
+            <Route path='/post-job' component={PostJob} />
+          }
+          <Route path='/deposit' component={Deposit} />
+          <Route exact path='/'>
+            {userType && <Redirect to='/dashboard'/>}
+          </Route>
+          <Route>
+            <Redirect to='/dashboard'/>
+          </Route>
+        </Switch>
+      </div>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;

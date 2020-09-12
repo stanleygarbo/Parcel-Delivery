@@ -1,0 +1,17 @@
+.employer__screen{
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+.employer__screen > *{
+    margin:20px;
+}
+
+.employer__screen .column{
+    display: flex;
+    flex-direction: column;
+}
+
+.second__col{
+    width:602px;
+}

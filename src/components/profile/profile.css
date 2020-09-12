@@ -1,0 +1,37 @@
+.profile__container{
+    width:300px;
+    box-shadow: 0px 5px 10px -2px rgba(0,0,0,0.4);
+}
+
+.profile__container header{
+    padding:10px;
+    background-color: rgb(35, 207, 72);
+    color: #fff;
+}
+.profile__container header p:nth-child(1){
+    font-weight: 700;
+    font-size: 35px;
+}
+
+.profile__container header p:nth-child(2){
+    font-size: 20px;
+}
+
+.profile__container header p:nth-child(3){
+    font-size: 23px;
+}
+
+.profile__container .info{
+    padding:10px;
+}
+
+.profile__container .info p{
+    font-size: 13px;
+    padding-top: 10px;
+}
+
+.profile__container .info p span{
+    font-size: 18px;
+    font-weight: 700;
+    color:#333;
+}

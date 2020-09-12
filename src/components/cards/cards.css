@@ -1,0 +1,66 @@
+.work__card__container{
+    box-shadow: 0px 0px 10px -4px rgba(0,0,0,0.5);
+    display: flex;
+    background-color: #eaeaea;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+    overflow: hidden;
+}
+.work__card__container .middle {
+    margin: 0px 1px;
+}
+
+.work__card{
+    width:200px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.card__icon{
+    padding:10px;
+    background-color: #eaeaea;
+    border-bottom-right-radius: 15px;
+}
+
+.card__amount{
+    font-size: 30px;
+    padding:20px 10px 0px 10px;
+    font-weight: lighter;
+}
+
+.card__title{
+    text-transform: capitalize;
+    font-weight: 700;
+    font-size: 13px;
+    padding:20px 10px;
+    color:#333;
+}
+
+
+.account__balance__card{
+    box-shadow: 0px 0px 10px -4px rgba(0,0,0,0.5);
+    margin-top: 40px;
+}
+
+.account__balance__card header{
+    border-bottom: 1px solid #d4d4d4;
+    padding:10px;
+    color:#333;
+}
+
+.account__balance__card .card__body{
+    padding:10px;
+}
+
+.account__balance__card .card__body .balance{
+    font-size: 25px;
+    font-weight: lighter;
+    padding: 15px 0px;
+}
+
+.account__balance__card .card__body .card__buttons > *{
+    margin-right: 10px;
+}

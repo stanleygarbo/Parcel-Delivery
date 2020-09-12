@@ -1,0 +1,34 @@
+.driver__screen{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.driver__screen .column{
+    display: flex;
+    flex-direction: column;
+}
+
+.driver__screen .second  .job__container{
+    margin-top: 30px;
+}
+
+.driver__screen > *{
+    margin:20px;
+}
+
+.available__jobs__container{
+    margin:0 auto;
+    min-width: 300px;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.available__jobs__container .job__post{
+    width:500px;
+    height:400px;
+    margin: 10px 0px;
+    background-color: #dddddd;
+}
