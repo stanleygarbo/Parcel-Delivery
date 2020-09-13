@@ -112,7 +112,7 @@ const PostJob:React.FC = () => {
                 }
                 label="Fragile"
             />
-            <Button disabled={isLoading} variant='contained' color='primary' type='submit'>POST JOB</Button>
+            <Button disabled={isLoading} variant='contained' color='primary' className='post__job' type='submit'>POST JOB</Button>
         </form>
     );
 };

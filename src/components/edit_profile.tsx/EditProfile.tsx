@@ -51,7 +51,7 @@ const EditProfile:React.FC = () => {
             setTimeout(() => resolve("done!"), 1000)
         });
         await promise; 
-        setIsLoading(false)
+        setIsLoading(false);
         setInput({
             name:'',
             contact:'',

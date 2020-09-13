@@ -13,6 +13,7 @@
     "@types/react": "^16.9.49",
     "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.5",
+    "cypress": "^5.1.0",
     "firebase": "^7.19.1",
     "react": "^16.13.1",
     "react-credit-card-input": "^1.1.5",

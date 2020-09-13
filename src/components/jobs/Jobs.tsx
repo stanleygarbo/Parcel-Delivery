@@ -61,7 +61,7 @@ const Jobs:React.FC<Props> = ({jobs,title}) => {
                                 setIsLoading(false);
                                 deletePost(index);
                             }} 
-                            className={classes.deleteButton}>
+                            className={`${classes.deleteButton} delete__job`}>
                             <DeleteIcon/>
                         </IconButton>)
                     }
@@ -79,6 +79,7 @@ const Jobs:React.FC<Props> = ({jobs,title}) => {
                                 setIsLoading(false);
                                 deletePost(index);
                             }} 
+                            className='accept__job'
                             variant='contained' 
                             color='primary' 
                         >
