@@ -12,6 +12,7 @@ import {firestore} from './firebaseConfig';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { LoadingContext } from './contexts/LoadingContextProvider';
 import EditProfile from './components/edit_profile.tsx/EditProfile';
+import CommercialVessel from './components/commercial_vessel/CommercialVessel';
 
 const useStyles = makeStyles({
   linearProgress:{
@@ -42,7 +43,7 @@ const App:React.FC = () => {
   const {isLoading} = useContext(LoadingContext);
 
   useEffect(()=>{
-    firestore.collection('userTypes').doc('driver').get()
+    firestore.collection('userTypes').doc('employer').get()
     .then((doc)=>{
       setUserType(doc.data()!)
     });
@@ -62,14 +63,15 @@ const App:React.FC = () => {
                 :
                 <Route path='/post-job' component={PostJob} />
               }
+              {userType.userType === 'employer' && <Route path='/commercial-vessel' component={CommercialVessel} /> }
               <Route path='/deposit' component={Deposit} />
               <Route path='/edit-profile' component={EditProfile} />
               <Route exact path='/'>
-                {userType.userType && <Redirect to='/dashboard'/>}
+                {/* {userType.userType && <Redirect to='/dashboard'/>} */}
               </Route>
-              <Route>
+              {/* <Route>
                 <Redirect to='/dashboard'/>
-              </Route>
+              </Route> */}
             </Switch>
           </div>
         }

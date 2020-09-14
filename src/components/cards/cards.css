@@ -64,3 +64,9 @@
 .account__balance__card .card__body .card__buttons > *{
     margin-right: 10px;
 }
+
+
+.filter__card{
+    display: flex;
+    flex-direction: column;
+}

@@ -56,7 +56,6 @@ const PostJob:React.FC = () => {
             ...input,
             [e.target.name]: e.target.value 
         });
-
     };
 
     const formSubmitted = async (e:React.FormEvent<HTMLFormElement>) => {

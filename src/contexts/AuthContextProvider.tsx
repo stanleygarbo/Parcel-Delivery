@@ -1,4 +1,3 @@
-import { firestore } from '../firebaseConfig';
 import React,{useState, ReactNode} from 'react';
 
 interface Props{

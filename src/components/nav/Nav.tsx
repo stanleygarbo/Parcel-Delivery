@@ -45,13 +45,15 @@ const Nav:React.FC = () => {
                         <NavLink to='/post-job' activeStyle={activeLinkStyle}>Post Job</NavLink>
                     </li>
                 }
+                {userType.userType === 'employer' && <li><NavLink to='/commercial-vessel' activeStyle={activeLinkStyle}>Commercial Vessel</NavLink></li>}
+                {userType.userType === 'employer' && <li><NavLink to='/cruise' activeStyle={activeLinkStyle}>Cruise</NavLink></li>}
             </ul>
             <select disabled={isLoading} className={`${isLoading && 'disabled'}`} onChange={UserTypeChanged} value={userType.userType}>
                 <option value="driver">Driver</option>
                 <option value="employer">Employer</option>
             </select>
-          {renderRedirect === 'employer' && <Redirect to='/dashboard'/>}
-          {renderRedirect === 'driver' && <Redirect to='/dashboard'/>}
+          {/* {renderRedirect === 'employer' && <Redirect to='/dashboard'/>}
+          {renderRedirect === 'driver' && <Redirect to='/dashboard'/>} */}
 
         </nav>
     );
